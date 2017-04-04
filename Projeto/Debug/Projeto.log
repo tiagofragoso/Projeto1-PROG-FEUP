@@ -1,0 +1,13 @@
+﻿  Source.cpp
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(178): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(182): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(191): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(204): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(235): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(245): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(257): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(262): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(267): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\documents\visual studio 2017\projects\projeto\projeto\source.cpp(277): warning C4018: '<': signed/unsigned mismatch
+  Projeto.vcxproj -> \\mac\home\documents\visual studio 2017\Projects\Projeto\Debug\Projeto.exe
+  Projeto.vcxproj -> \\mac\home\documents\visual studio 2017\Projects\Projeto\Debug\Projeto.pdb (Partial PDB)
