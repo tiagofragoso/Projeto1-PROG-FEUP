@@ -22,12 +22,24 @@ struct Driver {
 	int min_rest;
 };
 
+struct Stop {
+	string name;
+	int linePos;
+	int lineID;
+	int posInLine;
+	int stopH;
+	int stopM;
+	int freq;
+};
+
 static vector<Line> lines;
 static vector<Driver> drivers;
 static string lines_path;
 static string drivers_path;
 const int STARTING_HOUR = 7;
-const int ENDING_HOUR = 23;
+const int STARTING_MIN = 0;
+const int ENDING_HOUR = 22;
+const int ENDING_MIN = 0;
 
 void trim(string &s) {
 	if (s.find_first_not_of(' ') != -1) s = s.substr(s.find_first_not_of(' '));
@@ -279,7 +291,7 @@ void addDriver() {
 		cin >> temp;
 	}
 	newDriver.id = temp;
-	cout << "NAME: "; 
+	cout << "NAME: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, name);
 	trim(name);
@@ -420,7 +432,7 @@ void printSummaryLines() {
 		int x = 0;
 		Line l1 = lines.at(i);
 		cout << setw(5) << l1.id << setw(3) << " " << setw(5) << l1.freq << setw(3) << " ";
-		for (int i = 0; i < l1.stops.size() ; i++) {
+		for (int i = 0; i < l1.stops.size(); i++) {
 			x += l1.stops.at(i).size();
 			x += 2;
 			cout << l1.stops.at(i);
@@ -522,8 +534,8 @@ void changeLineTimes(int lineID, int linePos) {
 	cout << "Line times updated successfully." << endl;
 }
 
-void changeLine() {
-	int lineID, linePos, op;
+int chooseLine() {
+	int lineID, linePos;
 	cout << "Available line IDs: ";
 	for (int i = 0; i < lines.size(); i++) {
 		cout << lines.at(i).id;
@@ -536,14 +548,20 @@ void changeLine() {
 	}
 	cout << "Choose line (ID): ";
 	cin >> lineID;
-	linePos = searchLine(lineID);
 
-	while (linePos == -1) {
+	while (searchLine(lineID) == -1) {
 		cout << "ID not found." << endl;
 		cout << "Choose line (ID): ";
 		cin >> lineID;
-		linePos = searchLine(lineID);
 	}
+	return lineID;
+}
+
+void changeLine() {
+	int lineID, linePos, op;
+
+	lineID = chooseLine();
+	linePos = searchLine(lineID);
 
 	do {
 		cout << "Line " << lineID << " selected." << endl << endl;
@@ -579,12 +597,23 @@ void changeLine() {
 
 }
 
-vector<int> searchStops(string stop) {
-	vector<int> foundLines;
+vector<Stop> searchStops(string stop) {
+	vector<Stop> foundLines;
 	for (size_t i = 0; i < lines.size(); i++) {
+		Stop newStop;
 		for (size_t x = 0; x < lines.at(i).stops.size(); x++) {
 			if (lines.at(i).stops.at(x) == stop) {
-				foundLines.push_back(lines.at(i).id);
+				newStop.name = stop;
+				newStop.linePos = i;
+				newStop.posInLine = x;
+				newStop.lineID = lines.at(i).id;
+				newStop.freq = lines.at(i).freq;
+				newStop.stopH = STARTING_HOUR;
+				newStop.stopM = STARTING_MIN;
+				for (int z = 0; z < x; z++) {
+					newStop.stopM += lines.at(i).times.at(z);
+				}
+				foundLines.push_back(newStop);
 				break;
 			}
 		}
@@ -594,7 +623,7 @@ vector<int> searchStops(string stop) {
 
 void searchStops() {
 	string stop;
-	vector<int> foundLines;
+	vector <Stop> foundLines;
 	cout << "Insert the stop name to search for: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, stop);
@@ -605,7 +634,7 @@ void searchStops() {
 	else {
 		cout << "The stop '" << stop << "' belongs to the following lines: ";
 		for (size_t i = 0; i < foundLines.size(); i++) {
-			cout << foundLines.at(i);
+			cout << foundLines.at(i).lineID;
 			if (i != foundLines.size() - 1) {
 				cout << ", ";
 			}
@@ -616,9 +645,39 @@ void searchStops() {
 	}
 }
 
+void treatTime(int &h, int &m) {
+	while (m >= 60) {
+		m -= 60;
+		h++;
+	}
+	while (h >= 24) {
+		h -= 24;
+	}
+}
+
+string displayTime(int &h, int &m) {
+	string time;
+	treatTime(h, m);
+	if (h < 10) {
+		time = "0" + to_string(h);
+	}
+	else {
+		time = to_string(h);
+	}
+	time += ":";
+	if (m < 10) {
+		time += "0" + to_string(m);
+	}
+	else {
+		time += to_string(m);
+	}
+	return time;
+}
+
 void displayStopSchedule() {
-	vector<int> foundLines;
+	vector<Stop> foundLines;
 	string stop;
+	bool notFinished = true;
 	cout << "Insert the stop to look up its daily schedule: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, stop);
@@ -627,15 +686,85 @@ void displayStopSchedule() {
 		cout << "The stop '" << stop << "' does not belong to any line.\n";
 		foundLines.clear();
 		cout << "Insert the stop to look up its daily schedule: ";
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		getline(cin, stop);
 		foundLines = searchStops(stop);
+	}
+	cout << std::left;
+	for (int i = 0; i < foundLines.size(); i++) {
+		cout << setw(5) << foundLines.at(i).lineID;
+		if (i != foundLines.size() - 1) {
+			cout << setw(5) << " ";
+		}
+		else {
+			cout << endl;
+		}
+	}
+
+	do {
+		notFinished = true;
+		for (int i = 0; i < foundLines.size(); i++) {
+			treatTime(foundLines.at(i).stopH, foundLines.at(i).stopM);
+			if (foundLines.at(i).stopH > ENDING_HOUR || (foundLines.at(i).stopH == ENDING_HOUR && foundLines.at(i).stopM >= ENDING_MIN)) {
+				cout << setw(5) << " ";
+			}
+			else {
+				cout << setw(5) << displayTime(foundLines.at(i).stopH, foundLines.at(i).stopM);
+				notFinished &= false;
+				foundLines.at(i).stopM += foundLines.at(i).freq;
+			}
+			if (i != foundLines.size() - 1) {
+				cout << setw(5) << " ";
+			}
+			else {
+				cout << endl;
+			}
+		}
+	} while (!notFinished);
+}
+
+void displayLineSchedule() {
+	int lineH, lineM, stopH, stopM, lineFreq;
+	lineH = STARTING_HOUR;
+	lineM = STARTING_MIN;
+	int lineID = chooseLine();
+	int linePos = searchLine(lineID);
+	cout << "Displaying the schedule for line " << lineID << ":\n\n";
+	lineFreq = lines.at(linePos).freq;
+	for (int i = 0; i < lines.at(linePos).stops.size(); i++) {
+		cout << setw(lines.at(linePos).stops.at(i).size()) << lines.at(linePos).stops.at(i);
+		if (i != lines.at(linePos).stops.size() - 1) {
+			cout << setw(3) << " ";
+		}
+		else {
+			cout << endl;
+		}
+	}
+	cout << std::left;
+	while (true) {
+		treatTime(lineH, lineM);
+		if (lineH > ENDING_HOUR || (lineH == ENDING_HOUR && lineM >= ENDING_MIN)) {
+			break;
+		}
+		cout << setw(lines.at(linePos).stops.at(0).size()) << displayTime(lineH, lineM) << setw(3) << " ";
+		stopH = lineH;
+		stopM = lineM;
+		for (int x = 0; x < lines.at(linePos).times.size(); x++) {
+			stopM += lines.at(linePos).times.at(x);
+			cout << setw(lines.at(linePos).stops.at(x + 1).size()) << displayTime(stopH, stopM);
+			if (x != lines.at(linePos).times.size() - 1) {
+				cout << setw(3) << " ";
+			}
+			else {
+				cout << endl;
+			}
+		}
+		lineM += lineFreq;
 	}
 
 }
 
 int main() {
 	loadFile("lines");
-	searchStops();
+	displayStopSchedule();
 	return 0;
 }
