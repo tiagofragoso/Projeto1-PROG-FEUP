@@ -3,3 +3,4 @@
 505 ; 40 ; Matosinhos, Sete Bicas, Rotunda dos Produtos Estrela, Senhora da Hora ; 40, 30, 45
 506 ; 15 ; Ribeira, Alfandega, Fluvial, Foz ; 10, 25, 55
 804 ; 30 ; Hospital de Sao Joao, S. Pedro da Cova ; 50
+900 ; 20 ; stop1, Paranhos, stop2, stop3, stop4, Hospital de Sao Joao, FEUP ; 10, 20, 30, 15, 20, 15
