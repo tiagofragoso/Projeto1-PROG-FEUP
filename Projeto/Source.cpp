@@ -27,6 +27,7 @@ struct Stop {
 	int linePos;
 	int lineID;
 	int posInLine;
+	int timeFromStart;
 	int stopH;
 	int stopM;
 	int freq;
@@ -267,11 +268,23 @@ void changeFile(string type) {
 	}
 	else {
 		if (type == "lines") {
+			if (!lines_path.empty()) {
 			path = lines_path;
+			}
+			else {
+				cout << "Insert the name of the file to save " << type << " to (e.g. 'lines.txt'): ";
+				getline(cin, path);
+			}
 			newStrings = linesToStrings();
 		}
 		else {
-			path = drivers_path;
+			if (!drivers_path.empty()) {
+				path = drivers_path;
+			}
+			else {
+				cout << "Insert the name of the file to save " << type << " to (e.g. 'drivers.txt'): ";
+				getline(cin, path);
+			}
 			newStrings = driversToStrings();
 
 		}
@@ -311,6 +324,7 @@ void printDrivers() {
 		cout << setw(6) << d1.max_hours_week << setw(3) << " ";
 		cout << setw(6) << d1.min_rest << endl;
 	}
+	cout << endl;
 }
 
 int searchDriver(int id) {
@@ -349,6 +363,9 @@ void addDriver() {
 	bool finished = false;
 
 	do {
+		system("cls");
+		cout << "[DRIVER MANAGEMENT MENU]\n\n";
+		cout << "Insert the new driver information: \n\n";
 		do {
 			cout << "ID: ";
 			if (cin >> tempInt && tempInt > 0) {
@@ -401,7 +418,7 @@ void addDriver() {
 				break;
 			}
 			else {
-				cerr << "Invalid driver weekly shift.n\n";
+				cerr << "Invalid driver weekly shift.\n";
 				cin.clear();
 				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
@@ -502,28 +519,30 @@ void changeDriverRest(int driverID, int driverPos) {
 
 int chooseDriver() {
 	int driverID;
-	cout << "Available driver IDs: ";
-	for (int i = 0; i < drivers.size(); i++) {
-		cout << drivers.at(i).id;
-		if (i != (drivers.size() - 1)) {
-			cout << ", ";
-		}
-		else {
-			cout << endl;
+	if (!drivers.empty()) {
+		cout << "Available driver IDs: ";
+		for (int i = 0; i < drivers.size(); i++) {
+			cout << drivers.at(i).id;
+			if (i != (drivers.size() - 1)) {
+				cout << ", ";
+			}
+			else {
+				cout << endl;
+			}
 		}
 	}
 
 	do {
 		cout << "Choose driver (ID): ";
-		if (cin >> driverID && (searchDriver(driverID) != -1)) {
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			break;
-		}
-		else {
-			cerr << "Invalid line ID.\n";
-			cin.clear();
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		}
+			if (cin >> driverID && (searchDriver(driverID) != -1)) {
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				break;
+			}
+			else {
+				cerr << "Invalid line ID.\n";
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 	} while (true);
 
 	return driverID;
@@ -589,6 +608,7 @@ void printSummaryLines() {
 		cout << setw(5) << l1.id << setw(3) << " " << setw(5) << l1.freq << setw(3) << " ";
 		cout << l1.stops.at(0) << " <--> " << l1.stops.at(l1.stops.size() - 1) << endl;
 	}
+	cout << endl;
 }
 
 int searchLine(int id) {
@@ -861,32 +881,38 @@ Stops searchStops(string stop) {
 		for (size_t x = 0; x < lines.at(i).stops.size(); x++) {
 			if (lines.at(i).stops.at(x) == stop) {
 				// SENTIDO DIRETO
+
 				Stop newStop;
 				newStop.name = stop;
 				newStop.linePos = i;
 				newStop.posInLine = x;
 				newStop.lineID = lines.at(i).id;
 				newStop.freq = lines.at(i).freq;
-				newStop.stopH = STARTING_HOUR;
-				newStop.stopM = STARTING_MIN;
+				newStop.timeFromStart = 0;
 				newStop.direction = 0;
-				for (size_t z = 0; z < x; z++) {
-					newStop.stopM += lines.at(i).times.at(z);
+				for (int z = 0; z < x; z++) {
+					newStop.timeFromStart += lines.at(i).times.at(z);
 				}
+				newStop.stopH = STARTING_HOUR;
+				newStop.stopM = STARTING_MIN + newStop.timeFromStart;
 				stopsD.push_back(newStop);
+
 				//SENTIDO INVRSO
+
 				Stop newStop2;
 				newStop2.name = stop;
 				newStop2.linePos = i;
 				newStop2.posInLine = x;
 				newStop2.lineID = lines.at(i).id;
 				newStop2.freq = lines.at(i).freq;
-				newStop2.stopH = STARTING_HOUR;
-				newStop2.stopM = STARTING_MIN;
+				newStop2.timeFromStart = 0;
 				newStop2.direction = 1;
-				for (size_t z = lines.at(i).times.size() - 1; z > x; z--) {
-					newStop2.stopM += lines.at(i).times.at(z);
+				for (int z = lines.at(i).times.size() - 1; z >= x; z--) {
+					if (z < 0) break;
+					newStop2.timeFromStart += lines.at(i).times.at(z);
 				}
+				newStop2.stopH = STARTING_HOUR;
+				newStop2.stopM = STARTING_MIN + newStop2.timeFromStart;
 				stopsI.push_back(newStop2);
 				break;
 			}
@@ -933,6 +959,10 @@ void treatTime(int &h, int &m) {
 		m -= 60;
 		h++;
 	}
+	while (m < 0) {
+		m += 60;
+		h--;
+	}
 	while (h >= 24) {
 		h -= 24;
 	}
@@ -957,6 +987,13 @@ string displayTime(int &h, int &m) {
 	return time;
 }
 
+bool compareEndTime(Stop stop) {
+	stop.stopM -= stop.timeFromStart;
+	treatTime(stop.stopH, stop.stopM);
+	if (stop.stopH > ENDING_HOUR || (stop.stopH == ENDING_HOUR && stop.stopM >= ENDING_MIN)) return true;
+	else return false;
+}
+
 void displayStopSchedule() {
 	Stops foundLines;
 	string stop;
@@ -978,6 +1015,8 @@ void displayStopSchedule() {
 
 	//MAIN DIRECTION
 
+	cout << endl << "MAIN DIRECTION:\n\n";
+
 	cout << std::left;
 	for (int i = 0; i < foundLines.stopsDirect.size(); i++) {
 		cout << setw(5) << foundLines.stopsDirect.at(i).lineID;
@@ -993,7 +1032,7 @@ void displayStopSchedule() {
 		notFinished = true;
 		for (int i = 0; i < foundLines.stopsDirect.size(); i++) {
 			treatTime(foundLines.stopsDirect.at(i).stopH, foundLines.stopsDirect.at(i).stopM);
-			if (foundLines.stopsDirect.at(i).stopH > ENDING_HOUR || (foundLines.stopsDirect.at(i).stopH == ENDING_HOUR && foundLines.stopsDirect.at(i).stopM >= ENDING_MIN)) {
+			if (compareEndTime(foundLines.stopsDirect.at(i))) {
 				cout << setw(5) << " ";
 			}
 			else {
@@ -1009,15 +1048,16 @@ void displayStopSchedule() {
 			}
 		}
 	} while (!notFinished);
-}
 
-int chooseLine() {
-	int lineID;
-	cout << "Available line IDs: ";
-	for (int i = 0; i < lines.size(); i++) {
-		cout << lines.at(i).id;
-		if (i != (lines.size() - 1)) {
-			cout << ", ";
+	// INVERSE DIRECTION
+
+	cout << "\nINVERSE DIRECTION:\n\n";
+
+	cout << std::left;
+	for (int i = 0; i < foundLines.stopsInverse.size(); i++) {
+		cout << setw(5) << foundLines.stopsInverse.at(i).lineID;
+		if (i != foundLines.stopsInverse.size() - 1) {
+			cout << setw(5) << " ";
 		}
 		else {
 			cout << endl;
@@ -1025,16 +1065,56 @@ int chooseLine() {
 	}
 
 	do {
+		notFinished = true;
+		for (int i = 0; i < foundLines.stopsInverse.size(); i++) {
+			treatTime(foundLines.stopsInverse.at(i).stopH, foundLines.stopsInverse.at(i).stopM);
+			if (compareEndTime(foundLines.stopsInverse.at(i))) {
+				cout << setw(5) << " ";
+			}
+			else {
+				cout << setw(5) << displayTime(foundLines.stopsInverse.at(i).stopH, foundLines.stopsInverse.at(i).stopM);
+				notFinished &= false;
+				foundLines.stopsInverse.at(i).stopM += foundLines.stopsInverse.at(i).freq;
+			}
+			if (i != foundLines.stopsInverse.size() - 1) {
+				cout << setw(5) << " ";
+			}
+			else {
+				cout << endl;
+			}
+		}
+	} while (!notFinished);
+
+	cout << endl << "Press any key to continue...";
+	getchar();
+}
+
+int chooseLine() {
+	int lineID;
+	if (!lines.empty()) {
+		cout << "Available line IDs: ";
+		for (int i = 0; i < lines.size(); i++) {
+			cout << lines.at(i).id;
+			if (i != (lines.size() - 1)) {
+				cout << ", ";
+			}
+			else {
+				cout << endl;
+			}
+		}
+	}
+
+	do {
 		cout << "Choose line (ID): ";
-		if (cin >> lineID && (searchLine(lineID) != -1)) {
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			break;
-		}
-		else {
-			cerr << "Invalid line ID.\n";
-			cin.clear();
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		}
+			if (cin >> lineID && (searchLine(lineID) != -1)) {
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				break;
+			}
+			else {
+				cerr << "Invalid line ID.\n";
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 	} while (true);
 
 	return lineID;
@@ -1290,8 +1370,8 @@ void driverManagementMenu() {
 	int op;
 	do {
 		system("cls");
-		printDrivers();
-		cout << "\n[DRIVER MANAGEMENT MENU]\n\n";
+		if (!drivers.empty()) printDrivers();
+		cout << "[DRIVER MANAGEMENT MENU]\n\n";
 		cout << "[1]- Choose driver to change.\n";
 		cout << "[2]- Add new driver.\n";
 		cout << "[9]- Back.\n\n";
@@ -1402,8 +1482,8 @@ void lineManagementMenu() {
 
 	do {
 		system("cls");
-		printSummaryLines();
-		cout << "\n[LINE MANAGEMENT MENU]\n\n";
+		if (!lines.empty()) printSummaryLines();
+		cout << "[LINE MANAGEMENT MENU]\n\n";
 		cout << "[1]- Choose line to change.\n";
 		cout << "[2]- Add new line.\n";
 		cout << "[9]- Back.\n\n";
@@ -1449,7 +1529,7 @@ void lineInfoMenu() {
 	do {
 		system("cls");
 		if (!lines.empty()) printSummaryLines();
-		cout << "\n[LINES/STOPS INFO MENU]\n\n";
+		cout << "[LINES/STOPS INFO MENU]\n\n";
 		cout << "[1]- View detailed information about a line.\n";
 		cout << "[2]- Find a stop.\n";
 		cout << "[3]- Display line schedule.\n";
@@ -1471,6 +1551,7 @@ void lineInfoMenu() {
 			}
 		} while (true);
 
+
 		switch (op) {
 		case 1:
 			detailedInfoMenu();
@@ -1482,6 +1563,9 @@ void lineInfoMenu() {
 			break;
 		case 3:
 			displayLineSchedule();
+			break;
+		case 4:
+			displayStopSchedule();
 			break;
 		case 5:
 			displayRoute();
@@ -1496,6 +1580,7 @@ void lineInfoMenu() {
 
 void mainMenu() {
 	int op;
+	char auxOp;
 	do {
 		system("cls");
 		cout << "[MAIN MENU]\n\n";
@@ -1529,12 +1614,36 @@ void mainMenu() {
 			break;
 		case 3:
 			driverManagementMenu();
+			break;
 		case 4:
 			lineInfoMenu();
 			break;
 		case 5:
 			driverInfoMenu();
 			break;
+		case 0:
+			if (linesChanged || driversChanged) {
+				cout << "There are changes to be deployed to the files.\n";
+				do {
+					cout << "Would you like to save those changes (Y/N) ? ";
+					if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N')) {
+						cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						if (auxOp == 'Y') {
+							changeFile("lines");
+							changeFile("drivers");
+							break;
+						}
+						else {
+							break;
+						}
+					}
+					else {
+						cerr << "Invalid option.\n";
+						cin.clear();
+						cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
+				} while (true);
+			}
 		}
 
 	} while (op != 0);

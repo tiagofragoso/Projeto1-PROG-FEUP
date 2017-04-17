@@ -1,31 +1,35 @@
 ﻿  Source.cpp
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(217): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(221): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(230): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(243): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(286): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(306): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(318): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(506): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(587): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(596): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(615): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(621): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(742): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(770): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(982): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(994): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1017): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1058): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1076): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1169): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(218): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(222): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(231): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(244): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(299): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(319): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(332): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(524): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(613): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(623): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(642): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(648): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(769): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(797): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(901): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(918): warning C4018: '>=': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1029): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1041): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1065): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1077): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1104): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1153): warning C4018: '<': signed/unsigned mismatch
 \\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1171): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1197): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1199): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1225): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1242): warning C4018: '<': signed/unsigned mismatch
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1401): warning C4101: 'lineID': unreferenced local variable
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1401): warning C4101: 'linePos': unreferenced local variable
-\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1438): warning C4101: 'op': unreferenced local variable
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1264): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1266): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1292): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1294): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1320): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1337): warning C4018: '<': signed/unsigned mismatch
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1496): warning C4101: 'lineID': unreferenced local variable
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1496): warning C4101: 'linePos': unreferenced local variable
+\\mac\home\desktop\faculdade\1ºano - 2ºsemestre\prog\projetos\projeto\projeto\source.cpp(1533): warning C4101: 'op': unreferenced local variable
   Projeto.vcxproj -> \\Mac\Home\Desktop\FACULDADE\1ºANO - 2ºSEMESTRE\PROG\Projetos\Projeto\Debug\Projeto.exe
   Projeto.vcxproj -> \\Mac\Home\Desktop\FACULDADE\1ºANO - 2ºSEMESTRE\PROG\Projetos\Projeto\Debug\Projeto.pdb (Partial PDB)
