@@ -304,8 +304,6 @@ void changeFile(string type) {
 			cout << "Changes to " << type << " file ('" << path << "') successfully deployed.\n";
 			if (type == "lines") linesChanged = false;
 			else driversChanged = false;
-			cout << "Press any key to continue...";
-			getchar();
 
 			output_file.close();
 		}
@@ -1464,13 +1462,19 @@ void fileMenu() {
 			break;
 		case 3:
 			changeFile("lines");
+			cout << "Press any key to continue...";
+			getchar();
 			break;
 		case 4:
 			changeFile("drivers");
+			cout << "Press any key to continue...";
+			getchar();
 			break;
 		case 5:
 			changeFile("lines");
 			changeFile("drivers");
+			cout << "Press any key to continue...";
+			getchar();
 			break;
 		}
 
@@ -1631,6 +1635,8 @@ void mainMenu() {
 						if (auxOp == 'Y') {
 							changeFile("lines");
 							changeFile("drivers");
+							cout << "Press any key to continue...";
+							getchar();
 							break;
 						}
 						else {
